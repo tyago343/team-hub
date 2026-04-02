@@ -1,6 +1,63 @@
 {
     "signup": {
-        "title": "Signup",
-        "description": "Signup description"
+        "form": {
+            "title": "Create your account",
+            "description": "Start building your collaborative workspace today",
+            "fullname": {
+                "label": "Full name",
+                "placeholder": "Enter your full name",
+                "error": {
+                    "required": "Full name is required"
+                }
+            },
+            "email": {
+                "label": "Work email",
+                "placeholder": "Enter your email",
+                "error": {
+                    "required": "Email is required",
+                    "invalid": "Invalid email address"
+                }
+            },
+            "password": {
+                "label": "Password",
+                "placeholder": "Enter your password",
+                "hint": "Minimum 8 characters with a mix of letters and numbers.",
+                "error": {
+                    "required": "Password is required",
+                    "minLength": "Password must be at least 8 characters long"
+                }
+            },
+            "confirmPassword": {
+                "label": "Confirm password",
+                "placeholder": "Confirm your password",
+                "error": {
+                    "required": "Confirm password is required",
+                    "minLength": "Password must be at least 8 characters long",
+                    "match": "Passwords do not match"
+                }
+            },
+            "organizationName": {
+                "label": "Organization name",
+                "placeholder": "Acme Inc.",
+                "error": {
+                    "required": "Organization name is required"
+                }
+            },
+            "submit": "Create organization",
+            "terms": "By creating an account, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>",
+            "alreadyHaveAccount": "Already have an account?",
+            "login": "Log in"
+        },
+        "marketing": {
+            "teamhub": "TeamHub",
+            "title": "Empower your remote team with HR intelligence",
+            "description": "Manage your distributed organization with clarity and confidence. The all-in-one platform for team directories and operations.",
+            "testimony": {
+                "initials": "SJ",
+                "name": "Sarah J.",
+                "title": "Head of People",
+                "text": "TeamHub transformed how we manage our global team."
+            }
+        }
     }
 }
