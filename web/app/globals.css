@@ -1,26 +1,120 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* ──────────────────────────────────────────────
+     Colors — Primary (blue)
+     ────────────────────────────────────────────── */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-900: #1e3a8a;
+
+  /* ──────────────────────────────────────────────
+     Colors — Semantic
+     ────────────────────────────────────────────── */
+  --color-success-50: #f0fdf4;
+  --color-success-500: #22c55e;
+  --color-warning-50: #fffbeb;
+  --color-warning-500: #f59e0b;
+  --color-error-50: #fef2f2;
+  --color-error-500: #ef4444;
+  --color-info-500: #0ea5e9;
+
+  /* ──────────────────────────────────────────────
+     Colors — Surfaces & borders
+     ────────────────────────────────────────────── */
+  --color-surface-page: #f9fafb;
+  --color-surface-card: #ffffff;
+  --color-surface-sidebar: #ffffff;
+  --color-surface-input: #ffffff;
+  --color-border-default: #e5e7eb;
+  --color-border-strong: #d1d5db;
+
+  /* ──────────────────────────────────────────────
+     Font families
+     ────────────────────────────────────────────── */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  /* ──────────────────────────────────────────────
+     Typography scale
+     Each --text-* generates a utility (e.g. text-h1)
+     that sets font-size + line-height + letter-spacing
+     (+ font-weight for headings).
+     ────────────────────────────────────────────── */
+
+  /* Display — 36/44, bold, tight */
+  --text-display: 2.25rem;
+  --text-display--line-height: 2.75rem;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--font-weight: 700;
+
+  /* H1 — 30/38, bold, tight */
+  --text-h1: 1.875rem;
+  --text-h1--line-height: 2.375rem;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h1--font-weight: 700;
+
+  /* H2 — 24/32, semibold */
+  --text-h2: 1.5rem;
+  --text-h2--line-height: 2rem;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h2--font-weight: 600;
+
+  /* H3 — 20/28, semibold */
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.75rem;
+  --text-h3--font-weight: 600;
+
+  /* Body — 16/24 */
+  --text-body: 1rem;
+  --text-body--line-height: 1.5rem;
+
+  /* Body small — 14/20 */
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.25rem;
+
+  /* Caption — 12/16 */
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1rem;
+
+  /* Overline — 11/16, semibold, wide tracking */
+  --text-overline: 0.6875rem;
+  --text-overline--line-height: 1rem;
+  --text-overline--letter-spacing: 0.08em;
+  --text-overline--font-weight: 600;
+
+  /* Mono — 13/20 (pair with tabular-nums utility) */
+  --text-mono: 0.8125rem;
+  --text-mono--line-height: 1.25rem;
+
+  /* ──────────────────────────────────────────────
+     Border radius
+     Overrides Tailwind defaults to match spec:
+       inputs/buttons → md, cards → lg,
+       modals → xl, avatars → full
+     ────────────────────────────────────────────── */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* ──────────────────────────────────────────────
+     Shadows (gray-900 tinted)
+     ────────────────────────────────────────────── */
+  --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(17, 24, 39, 0.08),
+    0 2px 4px -2px rgba(17, 24, 39, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(17, 24, 39, 0.08),
+    0 4px 6px -4px rgba(17, 24, 39, 0.06);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ────────────────────────────────────────────────
+   Base styles
+   ──────────────────────────────────────────────── */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-surface-page);
+  color: var(--color-gray-700);
 }
