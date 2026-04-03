@@ -12,7 +12,7 @@ export interface UserPrimitives {
   updatedAt: Date;
 }
 
-export default class User {
+export class User {
   private readonly _id: UserId;
   private readonly _email: Email;
   private _password: HashedPassword;
@@ -40,14 +40,14 @@ export default class User {
   }
 
   public static create(props: {
-    email: string;
+    email: Email;
     password: HashedPassword;
     fullname: string;
   }): User {
     const now = new Date();
     return new User({
       id: generateUserId(),
-      email: Email.create(props.email),
+      email: props.email,
       password: props.password,
       fullname: props.fullname,
       emailVerifiedAt: null,

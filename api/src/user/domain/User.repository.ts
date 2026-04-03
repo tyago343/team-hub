@@ -1,4 +1,4 @@
-import User from './User';
+import { User } from './User';
 import { Email } from './Email.vo';
 import { UserId } from './UserId.type';
 

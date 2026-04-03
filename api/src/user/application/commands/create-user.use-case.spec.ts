@@ -6,7 +6,7 @@ import { PasswordHasher } from '../../domain/PasswordHasher.port';
 import { HashedPassword } from '../../domain/HashedPassword.type';
 import { UserAlreadyExistsError } from '../../domain/User.errors';
 import { InvalidEmailError } from '../../domain/User.errors';
-import User from '../../domain/User';
+import { User } from '../../domain/User';
 
 const HASHED = 'hashed_value' as HashedPassword;
 

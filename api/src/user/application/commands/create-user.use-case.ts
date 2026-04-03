@@ -1,5 +1,5 @@
 import { Email } from '../../domain/Email.vo';
-import User, { UserPrimitives } from '../../domain/User';
+import { UserPrimitives, User } from '../../domain/User';
 import { UserAlreadyExistsError } from '../../domain/User.errors';
 import { UserRepository } from '../../domain/User.repository';
 import { PasswordHasher } from '../../domain/PasswordHasher.port';
@@ -27,7 +27,7 @@ export class CreateUserUseCase {
     const hashedPassword = await this.passwordHasher.hash(command.password);
 
     const user = User.create({
-      email: command.email,
+      email,
       password: hashedPassword,
       fullname: command.fullname,
     });

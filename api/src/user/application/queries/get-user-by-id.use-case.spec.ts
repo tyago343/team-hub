@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { GetUserByIdUseCase } from './get-user-by-id.use-case';
 import { UserRepository } from '../../domain/User.repository';
-import User from '../../domain/User';
+import { User } from '../../domain/User';
 
 function mockUserRepository(
   overrides: Partial<UserRepository> = {},

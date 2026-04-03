@@ -3,7 +3,7 @@
 import { GetUserByEmailUseCase } from './get-user-by-email.use-case';
 import { UserRepository } from '../../domain/User.repository';
 import { InvalidEmailError } from '../../domain/User.errors';
-import User from '../../domain/User';
+import { User } from '../../domain/User';
 
 function mockUserRepository(
   overrides: Partial<UserRepository> = {},
