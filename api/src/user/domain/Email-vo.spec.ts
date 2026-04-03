@@ -1,4 +1,5 @@
-import { Email } from './Email';
+import { Email } from './Email.vo';
+import { InvalidEmailError } from './User.errors';
 
 describe('Email', () => {
   describe('create', () => {
@@ -17,24 +18,20 @@ describe('Email', () => {
       expect(email.value).toBe('user@example.com');
     });
 
-    it('should throw on invalid format (missing @)', () => {
-      expect(() => Email.create('invalid-email')).toThrow(
-        'Invalid email format',
-      );
+    it('should throw InvalidEmailError on invalid format (missing @)', () => {
+      expect(() => Email.create('invalid-email')).toThrow(InvalidEmailError);
     });
 
-    it('should throw on invalid format (missing domain)', () => {
-      expect(() => Email.create('user@')).toThrow('Invalid email format');
+    it('should throw InvalidEmailError on invalid format (missing domain)', () => {
+      expect(() => Email.create('user@')).toThrow(InvalidEmailError);
     });
 
-    it('should throw on invalid format (missing local part)', () => {
-      expect(() => Email.create('@example.com')).toThrow(
-        'Invalid email format',
-      );
+    it('should throw InvalidEmailError on invalid format (missing local part)', () => {
+      expect(() => Email.create('@example.com')).toThrow(InvalidEmailError);
     });
 
-    it('should throw on empty string', () => {
-      expect(() => Email.create('')).toThrow('Invalid email format');
+    it('should throw InvalidEmailError on empty string', () => {
+      expect(() => Email.create('')).toThrow(InvalidEmailError);
     });
   });
 

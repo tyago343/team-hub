@@ -1,5 +1,5 @@
 import User, { UserPrimitives } from './User';
-import { HashedPassword } from './HashedPassword';
+import { HashedPassword } from './HashedPassword.type';
 
 const VALID_PASSWORD = 'hashed_password_value' as HashedPassword;
 const OTHER_PASSWORD = 'other_hashed_password' as HashedPassword;
