@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 /* eslint-disable @typescript-eslint/require-await */
 import { CreateUserUseCase } from './create-user.use-case';
-import { UserRepository } from '../../domain/User.repository';
-import { PasswordHasher } from '../../domain/PasswordHasher.port';
-import { HashedPassword } from '../../domain/HashedPassword.type';
-import { UserAlreadyExistsError } from '../../domain/User.errors';
-import { InvalidEmailError } from '../../domain/User.errors';
+import { UserRepository } from '../../domain/user.repository';
+import { PasswordHasher } from '../../domain/password-hasher.port';
+import { HashedPassword } from '../../domain/hashed-password.type';
+import { UserAlreadyExistsError } from '../../domain/user.errors';
+import { InvalidEmailError } from '../../domain/user.errors';
 import { User } from '../../domain/User';
 
 const HASHED = 'hashed_value' as HashedPassword;

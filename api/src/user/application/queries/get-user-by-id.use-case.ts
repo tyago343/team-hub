@@ -1,6 +1,6 @@
 import { UserPrimitives } from '../../domain/User';
-import { UserRepository } from '../../domain/User.repository';
-import { UserId } from '../../domain/UserId.type';
+import { UserRepository } from '../../domain/user.repository';
+import { UserId } from '../../domain/user-id';
 
 interface GetUserByIdQuery {
   id: string;

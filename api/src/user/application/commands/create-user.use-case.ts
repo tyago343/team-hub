@@ -1,8 +1,9 @@
-import { Email } from '../../domain/Email.vo';
-import { UserPrimitives, User } from '../../domain/User';
-import { UserAlreadyExistsError } from '../../domain/User.errors';
-import { UserRepository } from '../../domain/User.repository';
-import { PasswordHasher } from '../../domain/PasswordHasher.port';
+import { Injectable } from '@nestjs/common';
+import { type UserPrimitives, User } from '../../domain/User';
+import { Email } from '../../domain/email.vo';
+import { UserAlreadyExistsError } from '../../domain/user.errors';
+import type { UserRepository } from '../../domain/user.repository';
+import type { PasswordHasher } from '../../domain/password-hasher.port';
 
 interface CreateUserCommand {
   email: string;
@@ -10,6 +11,7 @@ interface CreateUserCommand {
   fullname: string;
 }
 
+@Injectable()
 export class CreateUserUseCase {
   constructor(
     private readonly userRepository: UserRepository,

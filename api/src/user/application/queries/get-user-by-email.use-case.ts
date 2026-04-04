@@ -1,11 +1,12 @@
 import { UserPrimitives } from '../../domain/User';
-import { UserRepository } from '../../domain/User.repository';
-import { Email } from '../../domain/Email.vo';
+import { type UserRepository } from '../../domain/user.repository';
+import { Email } from '../../domain/email.vo';
+import { Injectable } from '@nestjs/common';
 
 interface GetUserByEmailQuery {
   email: string;
 }
-
+@Injectable()
 export class GetUserByEmailUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 

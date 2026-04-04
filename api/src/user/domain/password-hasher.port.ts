@@ -1,4 +1,4 @@
-import { HashedPassword } from './HashedPassword.type';
+import { HashedPassword } from './hashed-password.type';
 
 export interface PasswordHasher {
   hash(plainPassword: string): Promise<HashedPassword>;

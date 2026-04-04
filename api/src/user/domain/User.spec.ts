@@ -1,5 +1,6 @@
-import User, { UserPrimitives } from './User';
-import { HashedPassword } from './HashedPassword.type';
+import { Email } from './email.vo';
+import { User, type UserPrimitives } from './User';
+import { HashedPassword } from './hashed-password.type';
 
 const VALID_PASSWORD = 'hashed_password_value' as HashedPassword;
 const OTHER_PASSWORD = 'other_hashed_password' as HashedPassword;
@@ -19,7 +20,7 @@ describe('User', () => {
     it('should generate an id and set timestamps', () => {
       const before = new Date();
       const user = User.create({
-        email: 'new@example.com',
+        email: Email.create('new@example.com'),
         password: VALID_PASSWORD,
         fullname: 'Jane Doe',
       });
@@ -39,7 +40,7 @@ describe('User', () => {
     it('should propagate Email validation error for invalid email', () => {
       expect(() =>
         User.create({
-          email: 'not-an-email',
+          email: Email.create('not-an-email'),
           password: VALID_PASSWORD,
           fullname: 'Jane Doe',
         }),
@@ -71,7 +72,7 @@ describe('User', () => {
 
     it('should roundtrip create -> toPrimitives', () => {
       const user = User.create({
-        email: 'roundtrip@example.com',
+        email: Email.create('roundtrip@example.com'),
         password: VALID_PASSWORD,
         fullname: 'Round Trip',
       });

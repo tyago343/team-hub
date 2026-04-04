@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/unbound-method */
 import { GetUserByEmailUseCase } from './get-user-by-email.use-case';
-import { UserRepository } from '../../domain/User.repository';
-import { InvalidEmailError } from '../../domain/User.errors';
+import { UserRepository } from '../../domain/user.repository';
+import { InvalidEmailError } from '../../domain/user.errors';
 import { User } from '../../domain/User';
 
 function mockUserRepository(

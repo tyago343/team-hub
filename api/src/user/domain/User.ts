@@ -1,6 +1,6 @@
-import { Email } from './Email.vo';
-import { HashedPassword } from './HashedPassword.type';
-import { UserId, generateUserId } from './UserId.type';
+import { Email } from './email.vo';
+import { HashedPassword } from './hashed-password.type';
+import { UserId, generateUserId } from './user-id';
 
 export interface UserPrimitives {
   id: string;

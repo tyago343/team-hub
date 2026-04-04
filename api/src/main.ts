@@ -8,4 +8,4 @@ async function bootstrap() {
   const port = configService.get<number>('PORT', 8080);
   await app.listen(port);
 }
-bootstrap();
+bootstrap().catch(console.error);
