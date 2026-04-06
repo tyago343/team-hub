@@ -12,6 +12,7 @@ function mockUserRepository(
     save: jest.fn(async (user: User) => user),
     findByEmail: jest.fn(async () => null),
     findById: jest.fn(async () => null),
+    findAll: jest.fn(async () => ({ data: [], total: 0 })),
     delete: jest.fn(async () => {}),
     update: jest.fn(async (user: User) => user),
     ...overrides,

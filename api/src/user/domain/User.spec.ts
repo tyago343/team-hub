@@ -112,4 +112,32 @@ describe('User', () => {
       );
     });
   });
+
+  describe('changeFullname', () => {
+    it('should update fullname and updatedAt', () => {
+      const user = User.fromPrimitives(VALID_PRIMITIVES);
+      const originalUpdatedAt = user.updatedAt;
+
+      user.changeFullname('Jane Smith');
+
+      expect(user.fullname).toBe('Jane Smith');
+      expect(user.updatedAt.getTime()).toBeGreaterThanOrEqual(
+        originalUpdatedAt.getTime(),
+      );
+    });
+  });
+
+  describe('changeEmail', () => {
+    it('should update email and updatedAt', () => {
+      const user = User.fromPrimitives(VALID_PRIMITIVES);
+      const originalUpdatedAt = user.updatedAt;
+
+      user.changeEmail(Email.create('newemail@example.com'));
+
+      expect(user.email.value).toBe('newemail@example.com');
+      expect(user.updatedAt.getTime()).toBeGreaterThanOrEqual(
+        originalUpdatedAt.getTime(),
+      );
+    });
+  });
 });

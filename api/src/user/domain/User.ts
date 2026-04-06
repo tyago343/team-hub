@@ -14,9 +14,9 @@ export interface UserPrimitives {
 
 export class User {
   private readonly _id: UserId;
-  private readonly _email: Email;
+  private _email: Email;
   private _password: HashedPassword;
-  private readonly _fullname: string;
+  private _fullname: string;
   private _emailVerifiedAt: Date | null;
   private readonly _createdAt: Date;
   private _updatedAt: Date;
@@ -115,6 +115,16 @@ export class User {
 
   public changePassword(newPassword: HashedPassword): void {
     this._password = newPassword;
+    this._updatedAt = new Date();
+  }
+
+  public changeEmail(newEmail: Email): void {
+    this._email = newEmail;
+    this._updatedAt = new Date();
+  }
+
+  public changeFullname(newName: string): void {
+    this._fullname = newName;
     this._updatedAt = new Date();
   }
 }
