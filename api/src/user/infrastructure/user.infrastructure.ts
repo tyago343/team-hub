@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+import { PasswordHasher } from '../domain/password-hasher.port';
 import { UserRepository } from '../domain/user.repository';
+import { BcryptPasswordHasher } from './bcrypt-password-hasher';
 import { UserRepositoryImpl } from './typeorm/user.repository-impl';
 
 @Module({
@@ -9,7 +11,11 @@ import { UserRepositoryImpl } from './typeorm/user.repository-impl';
       provide: UserRepository,
       useClass: UserRepositoryImpl,
     },
+    {
+      provide: PasswordHasher,
+      useClass: BcryptPasswordHasher,
+    },
   ],
-  exports: [],
+  exports: [UserRepository, PasswordHasher],
 })
 export class UserInfrastructure {}

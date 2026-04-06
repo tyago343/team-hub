@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { type UserPrimitives, User } from '../../domain/User';
 import { Email } from '../../domain/email.vo';
 import { UserAlreadyExistsError } from '../../domain/user.errors';
-import type { UserRepository } from '../../domain/user.repository';
-import type { PasswordHasher } from '../../domain/password-hasher.port';
+import { PasswordHasher } from '../../domain/password-hasher.port';
+import { UserRepository } from '../../domain/user.repository';
 
 interface CreateUserCommand {
   email: string;

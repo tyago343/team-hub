@@ -1,5 +1,5 @@
 import { UserPrimitives } from '../../domain/User';
-import { type UserRepository } from '../../domain/user.repository';
+import { UserRepository } from '../../domain/user.repository';
 import { Email } from '../../domain/email.vo';
 import { Injectable } from '@nestjs/common';
 

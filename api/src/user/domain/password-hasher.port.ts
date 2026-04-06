@@ -1,6 +1,9 @@
 import { HashedPassword } from './hashed-password.type';
 
-export interface PasswordHasher {
-  hash(plainPassword: string): Promise<HashedPassword>;
-  compare(plainPassword: string, hashed: HashedPassword): Promise<boolean>;
+export abstract class PasswordHasher {
+  abstract hash(plainPassword: string): Promise<HashedPassword>;
+  abstract compare(
+    plainPassword: string,
+    hashed: HashedPassword,
+  ): Promise<boolean>;
 }
