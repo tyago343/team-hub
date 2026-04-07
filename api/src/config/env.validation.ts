@@ -11,6 +11,9 @@ const envSchema = z.object({
   DB_USERNAME: z.string().min(1),
   DB_PASSWORD: z.string().min(1),
   DB_NAME: z.string().min(1),
+
+  /** Comma-separated origins or omit for reflect request (dev). */
+  CORS_ORIGIN: z.string().optional(),
 });
 
 export type EnvConfig = z.infer<typeof envSchema>;

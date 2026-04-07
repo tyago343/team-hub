@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { validate } from './config/env.validation.js';
+import { validate } from './config/env.validation';
+import { AuthModule } from './auth/auth.module';
+import { OrganizationModule } from './organization/organization.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -24,6 +26,8 @@ import { UserModule } from './user/user.module';
       }),
     }),
     UserModule,
+    OrganizationModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

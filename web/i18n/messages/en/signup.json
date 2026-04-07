@@ -43,6 +43,9 @@
                     "required": "Organization name is required"
                 }
             },
+            "error": {
+                "generic": "Something went wrong. Please try again."
+            },
             "submit": "Create organization",
             "terms": "By creating an account, you agree to our <termsLink>Terms of Service</termsLink> and <privacyLink>Privacy Policy</privacyLink>",
             "alreadyHaveAccount": "Already have an account?",

@@ -7,6 +7,7 @@ import { Email } from '../../domain/email.vo';
 import { UserId } from '../../domain/user-id';
 import { UserRepository } from '../../domain/user.repository';
 import { UserEntity } from './user.entity';
+import { UserMapper } from './user.mapper';
 
 @Injectable()
 export class UserRepositoryImpl extends UserRepository {
@@ -17,33 +18,8 @@ export class UserRepositoryImpl extends UserRepository {
     super();
   }
 
-  private toDomain(entity: UserEntity): User {
-    return User.fromPrimitives({
-      id: entity.id,
-      email: entity.email,
-      password: entity.password,
-      fullname: entity.fullname,
-      emailVerifiedAt: entity.emailVerifiedAt,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
-    });
-  }
-
-  private toEntity(user: User): UserEntity {
-    const p = user.toPrimitives();
-    const entity = new UserEntity();
-    entity.id = p.id;
-    entity.email = p.email;
-    entity.password = p.password;
-    entity.fullname = p.fullname;
-    entity.emailVerifiedAt = p.emailVerifiedAt;
-    entity.createdAt = p.createdAt;
-    entity.updatedAt = p.updatedAt;
-    return entity;
-  }
-
   async save(user: User): Promise<User> {
-    const entity = this.toEntity(user);
+    const entity = UserMapper.toEntity(user);
     await this.ormRepository.save(entity);
     return user;
   }
@@ -52,12 +28,12 @@ export class UserRepositoryImpl extends UserRepository {
     const row = await this.ormRepository.findOne({
       where: { email: email.value },
     });
-    return row ? this.toDomain(row) : null;
+    return row ? UserMapper.toDomain(row) : null;
   }
 
   async findById(id: UserId): Promise<User | null> {
     const row = await this.ormRepository.findOne({ where: { id } });
-    return row ? this.toDomain(row) : null;
+    return row ? UserMapper.toDomain(row) : null;
   }
 
   async findAll(
@@ -70,7 +46,7 @@ export class UserRepositoryImpl extends UserRepository {
       order: { createdAt: 'DESC' },
     });
     return {
-      data: entities.map((e) => this.toDomain(e)),
+      data: entities.map((e) => UserMapper.toDomain(e)),
       total,
     };
   }
@@ -80,7 +56,7 @@ export class UserRepositoryImpl extends UserRepository {
   }
 
   async update(user: User): Promise<User> {
-    const entity = this.toEntity(user);
+    const entity = UserMapper.toEntity(user);
     await this.ormRepository.save(entity);
     return user;
   }

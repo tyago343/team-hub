@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema, type SignupSchema } from "./signup.schema";
+import { signupAction } from "./actions";
 
 function SignupForm() {
   const t = useTranslations("signup.form");
@@ -12,6 +13,7 @@ function SignupForm() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<SignupSchema>({
     resolver: zodResolver(signupSchema),
@@ -24,8 +26,24 @@ function SignupForm() {
     },
   });
 
-  const onSubmit = (data: SignupSchema) => {
-    console.log(data);
+  const onSubmit = async (data: SignupSchema) => {
+    const result = await signupAction(data);
+    if ("errors" in result) {
+      const err = result.errors as { message?: string; statusCode?: number };
+      const message =
+        typeof err.message === "string"
+          ? err.message
+          : t("error.generic");
+      setError("root", {
+        type: "server",
+        message,
+      });
+      return;
+    }
+    // Success: navigation will be wired when dashboard exists
+    if (typeof window !== "undefined") {
+      window.location.assign("/");
+    }
   };
 
   const labelClass = "text-overline uppercase text-gray-500";
@@ -165,6 +183,16 @@ function SignupForm() {
             </p>
           ) : null}
         </div>
+
+        {errors.root?.message ? (
+          <p
+            className="text-caption text-error-500"
+            role="alert"
+            id="signup-root-error"
+          >
+            {errors.root.message}
+          </p>
+        ) : null}
 
         <button
           type="submit"

@@ -1,23 +1,30 @@
+"use server";
+
 import { z } from "zod";
-import { signupSchema } from "./signup.schema";
+import { apiClient, ApiError } from "../../../lib/api-client";
+import { signupSchema, type SignupSchema } from "./signup.schema";
 
-async function createOrganization(formData: FormData) {
-  const validatedFields = signupSchema.safeParse({
-    fullname: formData.get("fullname"),
-    email: formData.get("email"),
-    password: formData.get("password"),
-    confirmPassword: formData.get("confirmPassword"),
-    organizationName: formData.get("organizationName"),
-  });
+type SignupSuccess = {
+  data: unknown;
+};
 
-  if (!validatedFields.success) {
-    return { errors: z.treeifyError(validatedFields.error) };
+type SignupFailure = {
+  errors: unknown;
+};
+
+export async function signupAction(
+  input: SignupSchema,
+): Promise<SignupSuccess | SignupFailure> {
+  const validated = signupSchema.safeParse(input);
+  if (!validated.success) {
+    return { errors: z.treeifyError(validated.error) };
   }
+
   const { fullname, email, password, confirmPassword, organizationName } =
-    validatedFields.data;
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/organizations`,
-    {
+    validated.data;
+
+  try {
+    const data = await apiClient<unknown>("/api/v1/auth/signup", {
       method: "POST",
       body: JSON.stringify({
         fullname,
@@ -26,13 +33,12 @@ async function createOrganization(formData: FormData) {
         confirmPassword,
         organizationName,
       }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+    });
+    return { data };
+  } catch (err) {
+    if (err instanceof ApiError) {
+      return { errors: err.body };
     }
-  );
-  if (!response.ok) {
-    return { errors: await response.json() };
+    throw err;
   }
-  return { data: await response.json() };
 }
