@@ -18,3 +18,10 @@ export class InvalidSlugError extends Error {
     this.name = 'InvalidSlugError';
   }
 }
+
+export class SlugAllocationError extends Error {
+  constructor() {
+    super('Could not allocate a unique organization slug');
+    this.name = 'SlugAllocationError';
+  }
+}

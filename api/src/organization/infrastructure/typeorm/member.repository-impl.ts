@@ -29,6 +29,16 @@ export class MemberRepositoryImpl extends MemberRepository {
     return row ? MemberMapper.toDomain(row) : null;
   }
 
+  async findByUserId(userId: UserId): Promise<Member | null> {
+    const rows = await this.ormRepository.find({
+      where: { userId },
+      order: { createdAt: 'ASC' },
+      take: 1,
+    });
+    const row = rows[0];
+    return row ? MemberMapper.toDomain(row) : null;
+  }
+
   async findByUserAndOrganization(
     userId: UserId,
     organizationId: OrganizationId,

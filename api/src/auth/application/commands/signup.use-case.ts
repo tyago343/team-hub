@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Member } from '../../../organization/domain/Member';
 import { Organization } from '../../../organization/domain/Organization';
+import { SlugAllocationError } from '../../../organization/domain/organization.errors';
 import { OrganizationRepository } from '../../../organization/domain/organization.repository';
 import { Role } from '../../../organization/domain/role';
 import { Slug } from '../../../organization/domain/slug.vo';
@@ -9,6 +10,11 @@ import { Email } from '../../../user/domain/email.vo';
 import { UserAlreadyExistsError } from '../../../user/domain/user.errors';
 import { PasswordHasher } from '../../../user/domain/password-hasher.port';
 import { UnitOfWork } from '../../../shared/ports/unit-of-work';
+import { OpaqueTokenHasher } from '../../domain/opaque-token-hasher.port';
+import { RefreshToken } from '../../domain/refresh-token';
+import { TokenService } from '../../domain/token.port';
+import type { TokenPayload } from '../../domain/token-payload';
+import type { AuthResult } from '../auth-result';
 
 export interface SignupCommand {
   fullname: string;
@@ -17,45 +23,21 @@ export interface SignupCommand {
   organizationName: string;
 }
 
-export interface SignupResult {
-  user: {
-    id: string;
-    email: string;
-    fullname: string;
-    emailVerifiedAt: Date | null;
-    createdAt: Date;
-    updatedAt: Date;
-  };
-  organization: {
-    id: string;
-    name: string;
-    slug: string;
-    createdAt: Date;
-    updatedAt: Date;
-  };
-  member: {
-    id: string;
-    userId: string;
-    organizationId: string;
-    role: string;
-    createdAt: Date;
-    updatedAt: Date;
-  };
-}
-
 @Injectable()
 export class SignupUseCase {
   constructor(
     private readonly unitOfWork: UnitOfWork,
     private readonly passwordHasher: PasswordHasher,
+    private readonly tokenService: TokenService,
+    private readonly opaqueTokenHasher: OpaqueTokenHasher,
   ) {}
 
-  async execute(command: SignupCommand): Promise<SignupResult> {
+  async execute(command: SignupCommand): Promise<AuthResult> {
     const email = Email.create(command.email);
     const hashedPassword = await this.passwordHasher.hash(command.password);
 
     return this.unitOfWork.execute(
-      async ({ users, organizations, members }) => {
+      async ({ users, organizations, members, refreshTokens }) => {
         const existing = await users.findByEmail(email);
         if (existing) {
           throw new UserAlreadyExistsError(command.email);
@@ -93,7 +75,29 @@ export class SignupUseCase {
         const orgP = organization.toPrimitives();
         const memP = member.toPrimitives();
 
+        const payload: TokenPayload = {
+          sub: userP.id,
+          email: userP.email,
+          organizationId: orgP.id,
+          memberId: memP.id,
+          role: memP.role,
+        };
+
+        const accessToken =
+          await this.tokenService.generateAccessToken(payload);
+        const { token: refreshToken, expiresAt } =
+          await this.tokenService.generateRefreshToken(payload);
+        const tokenHash = this.opaqueTokenHasher.hash(refreshToken);
+        const refreshEntity = RefreshToken.create({
+          userId: user.id,
+          tokenHash,
+          expiresAt,
+        });
+        await refreshTokens.save(refreshEntity);
+
         return {
+          accessToken,
+          refreshToken,
           user: {
             id: userP.id,
             email: userP.email,
@@ -135,6 +139,6 @@ export class SignupUseCase {
         return candidate;
       }
     }
-    throw new Error('Could not allocate a unique organization slug');
+    throw new SlugAllocationError();
   }
 }

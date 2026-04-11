@@ -14,6 +14,11 @@ const envSchema = z.object({
 
   /** Comma-separated origins or omit for reflect request (dev). */
   CORS_ORIGIN: z.string().optional(),
+
+  JWT_SECRET: z.string().min(1),
+  JWT_REFRESH_SECRET: z.string().min(1),
+  JWT_ACCESS_EXPIRATION: z.string().default('15m'),
+  JWT_REFRESH_EXPIRATION: z.string().default('7d'),
 });
 
 export type EnvConfig = z.infer<typeof envSchema>;

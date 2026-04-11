@@ -40,9 +40,8 @@ function SignupForm() {
       });
       return;
     }
-    // Success: navigation will be wired when dashboard exists
     if (typeof window !== "undefined") {
-      window.location.assign("/");
+      window.location.assign("/dashboard");
     }
   };
 

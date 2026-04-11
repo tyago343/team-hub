@@ -5,17 +5,25 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import type { Response } from 'express';
-import { MemberNotFoundError } from 'src/organization/domain/member.errors';
+import {
+  ExpiredRefreshTokenError,
+  InvalidCredentialsError,
+  InvalidRefreshTokenError,
+  JwtTokenExpiredError,
+  JwtTokenInvalidError,
+} from '../../auth/domain/auth.errors';
+import { MemberNotFoundError } from '../../organization/domain/member.errors';
 import {
   InvalidSlugError,
   OrganizationNotFoundError,
   OrganizationSlugAlreadyExistsError,
-} from 'src/organization/domain/organization.errors';
+  SlugAllocationError,
+} from '../../organization/domain/organization.errors';
 import {
   InvalidEmailError,
   UserAlreadyExistsError,
   UserNotFoundError,
-} from 'src/user/domain/user.errors';
+} from '../../user/domain/user.errors';
 
 type DomainException =
   | UserNotFoundError
@@ -24,7 +32,13 @@ type DomainException =
   | OrganizationNotFoundError
   | OrganizationSlugAlreadyExistsError
   | InvalidSlugError
-  | MemberNotFoundError;
+  | SlugAllocationError
+  | MemberNotFoundError
+  | InvalidCredentialsError
+  | InvalidRefreshTokenError
+  | ExpiredRefreshTokenError
+  | JwtTokenInvalidError
+  | JwtTokenExpiredError;
 
 @Catch(
   UserNotFoundError,
@@ -33,7 +47,13 @@ type DomainException =
   OrganizationNotFoundError,
   OrganizationSlugAlreadyExistsError,
   InvalidSlugError,
+  SlugAllocationError,
   MemberNotFoundError,
+  InvalidCredentialsError,
+  InvalidRefreshTokenError,
+  ExpiredRefreshTokenError,
+  JwtTokenInvalidError,
+  JwtTokenExpiredError,
 )
 export class DomainExceptionFilter implements ExceptionFilter {
   catch(exception: DomainException, host: ArgumentsHost) {
@@ -59,9 +79,19 @@ export class DomainExceptionFilter implements ExceptionFilter {
     }
     if (
       exception instanceof UserAlreadyExistsError ||
-      exception instanceof OrganizationSlugAlreadyExistsError
+      exception instanceof OrganizationSlugAlreadyExistsError ||
+      exception instanceof SlugAllocationError
     ) {
       return HttpStatus.CONFLICT;
+    }
+    if (
+      exception instanceof InvalidCredentialsError ||
+      exception instanceof InvalidRefreshTokenError ||
+      exception instanceof ExpiredRefreshTokenError ||
+      exception instanceof JwtTokenInvalidError ||
+      exception instanceof JwtTokenExpiredError
+    ) {
+      return HttpStatus.UNAUTHORIZED;
     }
     return HttpStatus.BAD_REQUEST;
   }

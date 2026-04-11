@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
+import { RefreshTokenRepositoryImpl } from '../../auth/infrastructure/typeorm/refresh-token.repository-impl';
+import { RefreshTokenEntity } from '../../auth/infrastructure/typeorm/refresh-token.entity';
 import { MemberRepositoryImpl } from '../../organization/infrastructure/typeorm/member.repository-impl';
 import { MemberEntity } from '../../organization/infrastructure/typeorm/member.entity';
 import { OrganizationRepositoryImpl } from '../../organization/infrastructure/typeorm/organization.repository-impl';
@@ -32,8 +34,11 @@ export class TypeOrmUnitOfWork extends UnitOfWork {
       const members = new MemberRepositoryImpl(
         manager.getRepository(MemberEntity),
       );
+      const refreshTokens = new RefreshTokenRepositoryImpl(
+        manager.getRepository(RefreshTokenEntity),
+      );
 
-      return work({ users, organizations, members });
+      return work({ users, organizations, members, refreshTokens });
     });
   }
 }

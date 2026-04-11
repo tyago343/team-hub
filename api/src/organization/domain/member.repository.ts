@@ -6,6 +6,7 @@ import type { UserId } from '../../user/domain/user-id';
 export abstract class MemberRepository {
   abstract save(member: Member): Promise<Member>;
   abstract findById(id: MemberId): Promise<Member | null>;
+  abstract findByUserId(userId: UserId): Promise<Member | null>;
   abstract findByUserAndOrganization(
     userId: UserId,
     organizationId: OrganizationId,

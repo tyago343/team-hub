@@ -22,7 +22,8 @@ import { UserModule } from './user/user.module';
         password: config.get<string>('DB_PASSWORD'),
         database: config.get<string>('DB_NAME'),
         autoLoadEntities: true,
-        synchronize: true,
+        // Never auto-sync in production; allow in development and test (migrations for prod).
+        synchronize: config.get<string>('NODE_ENV') !== 'production',
       }),
     }),
     UserModule,

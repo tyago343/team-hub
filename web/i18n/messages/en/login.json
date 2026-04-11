@@ -1,0 +1,40 @@
+{
+  "login": {
+    "form": {
+      "title": "Welcome back",
+      "description": "Sign in to your TeamHub workspace",
+      "email": {
+        "label": "Work email",
+        "placeholder": "Enter your email",
+        "error": {
+          "required": "Email is required",
+          "invalid": "Invalid email address"
+        }
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password",
+        "error": {
+          "required": "Password is required"
+        }
+      },
+      "error": {
+        "generic": "Something went wrong. Please try again."
+      },
+      "submit": "Sign in",
+      "noAccount": "Don’t have an account?",
+      "signup": "Create one"
+    },
+    "marketing": {
+      "teamhub": "TeamHub",
+      "title": "Your team, aligned and informed",
+      "description": "Access your directory, time-off, and org settings in one secure place.",
+      "testimony": {
+        "initials": "MK",
+        "name": "Marcus K.",
+        "title": "Engineering Lead",
+        "text": "We finally have one source of truth for who’s on the team and who’s out."
+      }
+    }
+  }
+}
